@@ -100,6 +100,83 @@ export class AppComponent {
 </html>
 ```
 
+### In React Application
+
+> **Important:** For React (or any non-Angular framework), use the **bundled web component file** (`hello-world-element.js`), not the Angular library directly. The Angular library requires the Angular Linker which is not available in non-Angular applications.
+
+```tsx
+// React component wrapper
+import { useEffect, useRef } from 'react';
+
+// Import the bundled web component (copy to your public folder or use CDN)
+// Option 1: Add to index.html
+// <script src="/hello-world-element.js"></script>
+
+// Option 2: Dynamic import in useEffect
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'hello-world-element': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & {
+          title?: string;
+          message?: string;
+          'initial-value'?: number;
+          'min-value'?: number;
+          'max-value'?: number;
+          step?: number;
+        },
+        HTMLElement
+      >;
+    }
+  }
+}
+
+function HelloWorldWrapper() {
+  const componentRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const component = componentRef.current;
+    if (!component) return;
+
+    const handleAction = (e: CustomEvent) => {
+      console.log('Action:', e.detail);
+    };
+
+    const handleCounterChange = (e: CustomEvent) => {
+      console.log('Counter:', e.detail);
+    };
+
+    component.addEventListener('actionTriggered', handleAction as EventListener);
+    component.addEventListener('counterChanged', handleCounterChange as EventListener);
+
+    return () => {
+      component.removeEventListener('actionTriggered', handleAction as EventListener);
+      component.removeEventListener('counterChanged', handleCounterChange as EventListener);
+    };
+  }, []);
+
+  return (
+    <hello-world-element
+      ref={componentRef}
+      title="My Counter"
+      message="Hello from React!"
+      initial-value={10}
+      min-value={0}
+      max-value={100}
+      step={5}
+    />
+  );
+}
+
+export default HelloWorldWrapper;
+```
+
+**Setup steps for React:**
+
+1. Copy `dist/web-component/hello-world-element.js` to your React app's `public` folder
+2. Add `<script src="/hello-world-element.js"></script>` to your `public/index.html`
+3. Use the component as shown above
+
 ## API
 
 ### Inputs
