@@ -1,3 +1,10 @@
+## [1.2.0](https://github.com/likhononair/ng-lib-web-comp/compare/v1.1.0...v1.2.0) (2025-12-17)
+
+
+### ✨ Features
+
+* **package:** update package name and registry for GitHub Packages ([0900c04](https://github.com/likhononair/ng-lib-web-comp/commit/0900c04ade0aaf5fcbbe8e9a7c5630418a4953b4))
+
 ## [1.1.0](https://github.com/likhononair/ng-lib-web-comp/compare/v1.0.0...v1.1.0) (2025-12-17)
 
 
