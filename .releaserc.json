@@ -36,7 +36,8 @@
       "changelogFile": "CHANGELOG.md"
     }],
     ["@semantic-release/npm", {
-      "pkgRoot": "dist/hello-world-web-component"
+      "pkgRoot": "dist/hello-world-web-component",
+      "npmPublish": false
     }],
     ["@semantic-release/github", {
       "assets": [
