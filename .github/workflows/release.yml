@@ -31,7 +31,7 @@ jobs:
         with:
           node-version: '20.x'
           cache: 'npm'
-          registry-url: 'https://registry.npmjs.org'
+          registry-url: 'https://npm.pkg.github.com'
 
       - name: Install dependencies
         run: npm ci
@@ -51,7 +51,6 @@ jobs:
           npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Upload release artifacts
         if: steps.semantic.outputs.new_release_published == 'true'
@@ -62,42 +61,6 @@ jobs:
             dist/hello-world-web-component
             dist/web-component
           retention-days: 30
-
-  publish-npm:
-    needs: release
-    if: needs.release.outputs.new_release_published == 'true'
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
-          cache: 'npm'
-          registry-url: 'https://registry.npmjs.org'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build library
-        run: npm run build
-
-      - name: Update package version
-        run: |
-          cd dist/hello-world-web-component
-          npm version ${{ needs.release.outputs.new_release_version }} --no-git-tag-version
-
-      - name: Publish to npm
-        run: |
-          cd dist/hello-world-web-component
-          npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   publish-github-packages:
     needs: release
@@ -124,11 +87,9 @@ jobs:
       - name: Build library
         run: npm run build
 
-      - name: Update package for GitHub Packages
+      - name: Update package version
         run: |
           cd dist/hello-world-web-component
-          # Update package name for GitHub Packages scope
-          npm pkg set name="@${{ github.repository_owner }}/hello-world-web-component"
           npm version ${{ needs.release.outputs.new_release_version }} --no-git-tag-version
 
       - name: Publish to GitHub Packages

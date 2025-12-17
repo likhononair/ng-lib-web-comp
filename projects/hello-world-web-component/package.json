@@ -1,5 +1,5 @@
 {
-  "name": "hello-world-web-component",
+  "name": "@likhononair/hello-world-web-component",
   "version": "0.0.0",
   "description": "Angular Web Component library with modern Angular syntax, signals, OnPush change detection",
   "keywords": [
@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/likhononair/ng-lib-web-comp#readme",
   "publishConfig": {
-    "access": "public"
+    "registry": "https://npm.pkg.github.com"
   },
   "peerDependencies": {
     "@angular/common": "^21.0.0",

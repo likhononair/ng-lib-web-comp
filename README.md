@@ -17,13 +17,14 @@ An Angular library that can be exported and published as a Web Component (Custom
 ### As Angular Library
 
 ```bash
-npm install hello-world-web-component
+npm install @bs01004/hello-world-web-component --registry=https://npm.pkg.github.com
 ```
 
 ### As Web Component (CDN/Script)
 
 ```html
-<script src="https://unpkg.com/hello-world-web-component@latest/hello-world-element.js"></script>
+<!-- Using jsDelivr CDN with GitHub Packages -->
+<script src="https://cdn.jsdelivr.net/gh/bs01004/ng-lib-web-comp@latest/dist/web-component/hello-world-element.js"></script>
 ```
 
 ## Usage
@@ -31,7 +32,7 @@ npm install hello-world-web-component
 ### In Angular Application
 
 ```typescript
-import { HelloWorldWebComponent } from 'hello-world-web-component';
+import { HelloWorldWebComponent } from '@bs01004/hello-world-web-component';
 
 @Component({
   selector: 'app-root',
@@ -313,13 +314,12 @@ BREAKING CHANGE: The old API has been removed.
 
 2. **Release** (`release.yml`) - Runs on main branch
    - Semantic release
-   - Publish to npm
    - Publish to GitHub Packages
    - Create GitHub release with assets
 
 ### Required Secrets
 
-- `NPM_TOKEN` - npm access token for publishing
+No additional secrets required - the workflow uses `GITHUB_TOKEN` which is automatically provided.
 
 ## License
 
