@@ -13,12 +13,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/user/ng-lib-web-comp.git"
+    "url": "https://github.com/likhononair/ng-lib-web-comp.git"
   },
   "bugs": {
-    "url": "https://github.com/user/ng-lib-web-comp/issues"
+    "url": "https://github.com/likhononair/ng-lib-web-comp/issues"
   },
-  "homepage": "https://github.com/user/ng-lib-web-comp#readme",
+  "homepage": "https://github.com/likhononair/ng-lib-web-comp#readme",
   "publishConfig": {
     "access": "public"
   },
