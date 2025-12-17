@@ -17,22 +17,25 @@ An Angular library that can be exported and published as a Web Component (Custom
 ### As Angular Library
 
 ```bash
-npm install @bs01004/hello-world-web-component --registry=https://npm.pkg.github.com
+npm install @likhononair/hello-world-web-component --registry=https://npm.pkg.github.com
 ```
 
-### As Web Component (CDN/Script)
+### As Web Component (for React, Vue, plain HTML, etc.)
+
+Download the bundled web component from [GitHub Releases](https://github.com/likhononair/ng-lib-web-comp/releases) or use jsDelivr CDN:
 
 ```html
-<!-- Using jsDelivr CDN with GitHub Packages -->
-<script src="https://cdn.jsdelivr.net/gh/bs01004/ng-lib-web-comp@latest/dist/web-component/hello-world-element.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/likhononair/ng-lib-web-comp@latest/dist/web-component/hello-world-element.js"></script>
 ```
+
+> **Note:** For non-Angular frameworks (React, Vue, etc.), you must use the bundled `hello-world-element.js` file, not the Angular library directly. The Angular library requires the Angular Linker which is only available in Angular build pipelines.
 
 ## Usage
 
 ### In Angular Application
 
 ```typescript
-import { HelloWorldWebComponent } from '@bs01004/hello-world-web-component';
+import { HelloWorldWebComponent } from '@likhononair/hello-world-web-component';
 
 @Component({
   selector: 'app-root',
