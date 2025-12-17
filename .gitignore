@@ -11,6 +11,13 @@
 npm-debug.log
 yarn-error.log
 
+# Package dist (built by CI)
+packages/*/dist
+
+# React demo local web component copy
+examples/react-demo/public/hello-world-element.js
+examples/react-demo/node_modules
+
 # IDEs and editors
 .idea/
 .project

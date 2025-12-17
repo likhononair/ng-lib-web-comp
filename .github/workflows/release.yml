@@ -1,0 +1,145 @@
+name: Release and Publish
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  packages: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    outputs:
+      new_release_published: ${{ steps.semantic.outputs.new_release_published }}
+      new_release_version: ${{ steps.semantic.outputs.new_release_version }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build library
+        run: npm run build
+
+      - name: Build web component element
+        run: npm run build:element
+
+      - name: Create concatenated bundle
+        run: npm run concat:element
+
+      - name: Semantic Release
+        id: semantic
+        uses: cycjimmy/semantic-release-action@v4
+        with:
+          semantic_version: 23
+          extra_plugins: |
+            @semantic-release/changelog@6
+            @semantic-release/git@10
+            conventional-changelog-conventionalcommits@7
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Upload release artifacts
+        if: steps.semantic.outputs.new_release_published == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-${{ steps.semantic.outputs.new_release_version }}
+          path: |
+            dist/hello-world-web-component
+            dist/web-component
+          retention-days: 30
+
+  publish-npm:
+    needs: release
+    if: needs.release.outputs.new_release_published == 'true'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build library
+        run: npm run build
+
+      - name: Update package version
+        run: |
+          cd dist/hello-world-web-component
+          npm version ${{ needs.release.outputs.new_release_version }} --no-git-tag-version
+
+      - name: Publish to npm
+        run: |
+          cd dist/hello-world-web-component
+          npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  publish-github-packages:
+    needs: release
+    if: needs.release.outputs.new_release_published == 'true'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js for GitHub Packages
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@${{ github.repository_owner }}'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build library
+        run: npm run build
+
+      - name: Update package for GitHub Packages
+        run: |
+          cd dist/hello-world-web-component
+          # Update package name for GitHub Packages scope
+          npm pkg set name="@${{ github.repository_owner }}/hello-world-web-component"
+          npm version ${{ needs.release.outputs.new_release_version }} --no-git-tag-version
+
+      - name: Publish to GitHub Packages
+        run: |
+          cd dist/hello-world-web-component
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

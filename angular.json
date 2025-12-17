@@ -2,9 +2,99 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "analytics": "d54e1bd6-ec80-4ac9-97ea-800791f77049"
   },
   "newProjectRoot": "projects",
   "projects": {
+    "hello-world-web-component": {
+      "projectType": "library",
+      "root": "projects/hello-world-web-component",
+      "sourceRoot": "projects/hello-world-web-component/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/hello-world-web-component/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/hello-world-web-component/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/hello-world-web-component/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "hello-world-element": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "projects/hello-world-element",
+      "sourceRoot": "projects/hello-world-element/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "projects/hello-world-element/src/main.ts",
+            "tsConfig": "projects/hello-world-element/tsconfig.app.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/hello-world-element/public"
+              }
+            ],
+            "styles": [
+              "projects/hello-world-element/src/styles.css"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "hello-world-element:build:production"
+            },
+            "development": {
+              "buildTarget": "hello-world-element:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test"
+        }
+      }
+    }
   }
 }

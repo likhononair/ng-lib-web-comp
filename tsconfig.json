@@ -4,6 +4,11 @@
   "compileOnSave": false,
   "compilerOptions": {
     "strict": true,
+    "paths": {
+      "hello-world-web-component": [
+        "./dist/hello-world-web-component"
+      ]
+    },
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
@@ -21,5 +26,28 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": true
   },
-  "files": []
+  "files": [],
+  "references": [
+    {
+      "path": "./projects/hello-world-web-component/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/hello-world-web-component/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/hello-world-element/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/hello-world-web-component/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/hello-world-web-component/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/hello-world-element/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/hello-world-element/tsconfig.spec.json"
+    }
+  ]
 }
