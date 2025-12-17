@@ -1,5 +1,3 @@
-import { Injectable } from '@angular/core';
-
 export type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 
 export interface LogEntry {
@@ -9,7 +7,6 @@ export interface LogEntry {
   message: string;
 }
 
-@Injectable()
 export class LoggerService {
   private readonly prefix = '[HelloWorldWebComponent]';
   private logHistory: LogEntry[] = [];

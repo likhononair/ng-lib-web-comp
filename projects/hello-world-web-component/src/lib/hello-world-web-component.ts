@@ -167,7 +167,6 @@ export interface ActionEvent {
       text-align: center;
     }
   `,
-  providers: [LoggerService],
 })
 export class HelloWorldWebComponent implements OnInit, OnDestroy {
   // Input signals with defaults
@@ -190,7 +189,9 @@ export class HelloWorldWebComponent implements OnInit, OnDestroy {
   readonly isMaxReached = computed(() => this.counter() >= this.maxValue());
   readonly isMinReached = computed(() => this.counter() <= this.minValue());
 
-  constructor(private readonly logger: LoggerService) {
+  private readonly logger = new LoggerService();
+
+  constructor() {
     this.logger.log('HelloWorldWebComponent', 'Constructor called');
 
     // Effect to log counter changes
