@@ -9,9 +9,7 @@ export interface LogEntry {
   message: string;
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class LoggerService {
   private readonly prefix = '[HelloWorldWebComponent]';
   private logHistory: LogEntry[] = [];
