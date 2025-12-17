@@ -12,7 +12,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test hello-world-web-component",
     "test:element": "ng test hello-world-element",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "publish:lib": "node scripts/publish.js"
   },
   "prettier": {
     "printWidth": 100,
@@ -44,16 +45,9 @@
     "@angular/build": "^21.0.3",
     "@angular/cli": "^21.0.3",
     "@angular/compiler-cli": "^21.0.0",
-    "@commitlint/cli": "^19.0.0",
-    "@commitlint/config-conventional": "^19.0.0",
-    "@semantic-release/changelog": "^6.0.3",
-    "@semantic-release/git": "^10.0.1",
     "concat": "^1.0.3",
-    "conventional-changelog-conventionalcommits": "^8.0.0",
-    "husky": "^9.0.0",
     "jsdom": "^27.1.0",
     "ng-packagr": "^21.0.0",
-    "semantic-release": "^24.0.0",
     "typescript": "~5.9.2",
     "vitest": "^4.0.8"
   }
