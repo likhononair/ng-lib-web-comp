@@ -1,3 +1,10 @@
+## [1.3.0](https://github.com/likhononair/ng-lib-web-comp/compare/v1.2.0...v1.3.0) (2025-12-17)
+
+### ✨ Features
+
+* **release:** rename job and streamline release process for GitHub Packages ([f6fb663](https://github.com/likhononair/ng-lib-web-comp/commit/f6fb6639517bc0f2c1605cef6537f234b071ceb3))
+* **release:** rename job and streamline release process for GitHub Packages ([d4217c9](https://github.com/likhononair/ng-lib-web-comp/commit/d4217c9ce781a21d5e2875ec41ae1d32450a0ad4))
+
 ## [1.2.0](https://github.com/likhononair/ng-lib-web-comp/compare/v1.1.0...v1.2.0) (2025-12-17)
 
 
